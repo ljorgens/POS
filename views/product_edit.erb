@@ -1,0 +1,13 @@
+<h2>Edit or delete <%= @product.description %></h2>
+
+<form action="/" method="post">
+  <input type="hidden" name="product_id" value="<%= @product.id %>">
+  <input type="hidden" name="_method" value="patch">
+
+  <input type="text" name="description" placeholder = "<%= @product.description %>">
+
+  <input type="text" name="price" placeholder = "<%= @product.price %>">
+
+  <button type="submit">Update</button>
+
+</form>

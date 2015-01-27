@@ -1,0 +1,17 @@
+<h2>Product List</h2>
+
+<form action="/products" method="post">
+  <input type="text" name="description" placeholder="Product description">
+  <input type="text" name="price" placeholder="Product price">
+  <button type="submit">Add Product</button>
+</form>
+
+<% if @products.any?() %>
+  <ul>
+    <% @products.each() do |product| %>
+      <li><%= product.description()%> <%= product.price().to_f() %> <a href="/products/<%= product.id %>/edit">Edit!</a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h3> There are no products in the store! </h3>
+<% end %>
