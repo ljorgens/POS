@@ -11,3 +11,9 @@
   <button type="submit">Update</button>
 
 </form>
+
+<form action="/" method="post">
+  <input type="hidden" name="product_id" value="<%= @product.id %>">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit">Delete product</button>
+</form>

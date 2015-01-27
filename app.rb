@@ -3,6 +3,7 @@ require "sinatra/reloader"
 also_reload 'lib/**/*.rb'
 require "sinatra/activerecord"
 require "./lib/product"
+require "./lib/purchase"
 require "pg"
 
 get("/") do
@@ -11,7 +12,7 @@ get("/") do
 end
 
 post("/products") do
-  new_product = Product.create({:description => params.fetch("description"), :price => params.fetch("price").to_f(2) })
+  new_product = Product.create({:description => params.fetch("description"), :price => params.fetch("price").to_f() })
   @products = Product.all()
   erb(:index)
 end
@@ -28,4 +29,26 @@ patch("/") do
   @product.update({:description => description, :price => price})
   @products = Product.all()
   erb(:index)
+end
+
+delete("/") do
+  @product = Product.find(params.fetch("product_id").to_i())
+  @product.delete()
+  @products = Product.all()
+  erb(:index)
+end
+
+patch("/cart") do
+  product_ids = params.fetch("product_ids")
+  total = 0
+  product_ids.each() do |product_id|
+    total = total + Product.find(product_id.to_i()).price.to_f()
+    total.round(2)
+  end
+  @new_purchase = Purchase.create({:description => nil, :total_price => total})
+
+  product_ids.each() do |product_id|
+    @new_purchase.products << Product.find(product_id.to_i())
+  end
+  erb(:cart)
 end

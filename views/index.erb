@@ -7,11 +7,16 @@
 </form>
 
 <% if @products.any?() %>
-  <ul>
-    <% @products.each() do |product| %>
-      <li><%= product.description()%> <%= product.price().to_f() %> <a href="/products/<%= product.id %>/edit">Edit!</a></li>
-    <% end %>
-  </ul>
+  <form action="/cart" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <ul class="list-unstyled">
+      <% @products.each() do |product| %>
+        <li><input type="checkbox" name="product_ids[]" value="<%= product.id %>"> <%= product.description()%> <%= product.price().to_f() %> <a href="/products/<%= product.id %>/edit">Edit!</a></li>
+      <% end %>
+    </ul>
+    <button type="submit">Add to cart</button>
+  </form>
+
 <% else %>
   <h3> There are no products in the store! </h3>
 <% end %>
