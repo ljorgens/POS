@@ -1,0 +1,7 @@
+<h3>All purchases listed below</h3>
+
+<ul>
+  <% @purchases.each do |purchase| %>
+    <li><a href = "/purchases/<%= purchase.id %>" > <%=purchase.created_at() %></a></li>
+  <% end %>
+</ul>

@@ -1,0 +1,9 @@
+<h1>Purchase</h1>
+
+<ul>
+  <% @purchase.products.each() do |product| %>
+    <li><%= product.description() %> <%= product.price() %></li>
+
+  <% end %>
+</ul>
+<h3>Total: $<%= @purchase.total_price() %></h3>

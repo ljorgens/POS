@@ -45,10 +45,20 @@ patch("/cart") do
     total = total + Product.find(product_id.to_i()).price.to_f()
     total.round(2)
   end
-  @new_purchase = Purchase.create({:description => nil, :total_price => total})
+  @purchase = Purchase.create({:description => nil, :total_price => total})
 
   product_ids.each() do |product_id|
-    @new_purchase.products << Product.find(product_id.to_i())
+    @purchase.products << Product.find(product_id.to_i())
   end
-  erb(:cart)
+  erb(:purchase)
+end
+
+get("/purchases") do
+  @purchases = Purchase.all
+  erb(:purchases)
+end
+
+get "/purchases/:id" do
+  @purchase = Purchase.find(params.fetch("id").to_i)
+  erb(:purchase)
 end
